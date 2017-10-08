@@ -12,10 +12,8 @@ binlog-ignore-db=information_schema
 binlog-ignore-db=mysql
 
 slow_query_log=1
-slow_query_log_file=/var/lib/mysql/mysql-slow.log
-
 sync_binlog=1
-log-bin=/var/lib/mysql/mysql-bin
+log-bin=mysql-bin
 EOF
 
 #variables for master

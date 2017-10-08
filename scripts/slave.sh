@@ -27,6 +27,14 @@ mysql -uroot -p${slave_mysql_root_passwd} ${replication_db} < /vagrant/${replica
 # sed -i 's/^server-id.*$/server-id = ${slave_server_id}/g' /etc/my.cnf
 cat >> /etc/mysql/mysql.conf.d/mysqld.cnf <<EOF
 server-id=${slave_server_id}
+replicate-do-db=test
+replicate-ignore-db=mysql
+replicate-ignore-db=information_schema
+relay-log=mysqld-relay-bin
+log-slave-updates
+
+log-bin=mysql-bin
+slow_query_log=1
 EOF
 
 /etc/init.d/mysql restart
