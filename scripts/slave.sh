@@ -19,7 +19,7 @@ cmd_ssh="sshpass -p ${master_ssh_login_passwd} ssh ${master_ssh_login_user}@${ma
 cmd_status="mysql -uroot -p${master_mysql_root_passwd} -e \"show master status\G\""
 export status=`${cmd_ssh} -e '${cmd_status}'`
 export binlogname=`echo \"$status\" | grep \"File\" | awk '{print $2}'`
-export postion=`echo "$status" | grep "Position" | awk '{print $2}'1
+export postion=`echo "$status" | grep "Position" | awk '{print $2}'
 
 mysql -uroot -p${slave_mysql_root_passwd} -e "drop database if exists ${replication_db};create database ${replication_db};"
 mysql -uroot -p${slave_mysql_root_passwd} ${replication_db} < /vagrant/${replication_db}.sql
