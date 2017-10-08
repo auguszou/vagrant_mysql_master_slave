@@ -25,7 +25,7 @@ export binlogname=`${cmd_ssh} -e '${cmd_binlogname}'`
 cmd_postion="echo "$status" | grep "Position" | awk '{print $2}'"
 export position=`${cmd_ssh} -e '${cmd_postion}'`
 
-mysql -uroot -p${slave_mysql_root_passwd} -e 'drop database if exists ${replication_db};create database ${replication_db};'
+mysql -uroot -p${slave_mysql_root_passwd} -e "drop database if exists ${replication_db};create database ${replication_db};"
 mysql -uroot -p${slave_mysql_root_passwd} ${replication_db} < /vagrant/${replication_db}.sql
 
 # sed -i 's/^server-id.*$/server-id = ${slave_server_id}/g' /etc/my.cnf

@@ -30,7 +30,7 @@ export slave_ssh_login_user="vagrant"
 export slave_ssh_login_passwd="vagrant"
 export slave_mysql_root_passwd="123"
 
-mysql -uroot -p${master_mysql_root_passwd} -e 'drop database if exists ${replication_db};create database ${replication_db};'
+mysql -uroot -p${master_mysql_root_passwd} -e "drop database if exists ${replication_db};create database ${replication_db};"
 
 {
 mysql -uroot -p${master_mysql_root_passwd} <<EOF
