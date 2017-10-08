@@ -17,9 +17,8 @@ export slave_ssh_login_passwd="vagrant"
 
 cmd_ssh="sshpass -p ${master_ssh_login_passwd} ssh -o StrictHostKeyChecking=no -o CheckHostIP=no -o UserKnownHostsFile=/dev/null ${master_ssh_login_user}@${master_ip}"
 cmd_status="mysql -uroot -p${master_mysql_root_passwd} -e 'show master status\G'"
-export status=`${cmd_ssh} '${cmd_status}'`
-export binlogname=`echo \"$status\" | grep \"File\" | awk '{print $2}'`
-export position=`echo "$status" | grep "Position" | awk '{print $2}'`
+export binlogname=`${cmd_ssh} ${cmd_status} | grep "File" | awk '{print $2}'`
+export position=`${cmd_ssh} ${cmd_status} | grep "Position" | awk '{print $2}'`
 
 mysql -uroot -p${slave_mysql_root_passwd} -e "drop database if exists ${replication_db};create database ${replication_db};"
 mysql -uroot -p${slave_mysql_root_passwd} ${replication_db} < /vagrant/${replication_db}.sql
@@ -49,7 +48,5 @@ MASTER_PASSWORD="${replication_passwd}",
 MASTER_LOG_FILE="${binlogname}",
 MASTER_LOG_POS=${position},
 MASTER_CONNECT_RETRY=10;
-
 START SLAVE;
 EOF
-
