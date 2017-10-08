@@ -20,7 +20,7 @@ EOF
 
 #variables for master
 export master_ip="192.168.1.10"
-export master_mysql_root_passwd="root"
+export master_mysql_root_passwd="123"
 export replication_user="copydb"
 export replication_passwd="123"
 export replication_db="test"
