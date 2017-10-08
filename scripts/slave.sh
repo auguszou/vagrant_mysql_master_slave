@@ -32,6 +32,8 @@ replicate-ignore-db=mysql
 replicate-ignore-db=information_schema
 relay-log=mysqld-relay-bin
 log-slave-updates
+slave-skip-errors=all
+slave-net-timeout=60
 
 log-bin=mysql-bin
 slow_query_log=1

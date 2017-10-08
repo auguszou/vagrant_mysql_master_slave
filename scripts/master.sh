@@ -34,6 +34,7 @@ mysql -uroot -p${master_mysql_root_passwd} -e "drop database if exists ${replica
 mysql -uroot -p${master_mysql_root_passwd} <<EOF
 CREATE USER '$replication_user'@'%' IDENTIFIED BY '$replication_passwd';
 GRANT REPLICATION SLAVE ON *.* TO '$replication_user'@'%' IDENTIFIED BY '$replication_passwd';
+FLUSH PRIVILEGES;
 FLUSH TABLES WITH READ LOCK;
 SELECT SLEEP(10);
 EOF
