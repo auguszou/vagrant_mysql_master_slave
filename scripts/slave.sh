@@ -34,14 +34,13 @@ EOF
 mysql -uroot -p${slave_mysql_root_passwd} <<EOF
 STOP SLAVE;
 CHANGE MASTER TO MASTER_HOST="${master_ip}",
+MASTER_PORT=3306,
 MASTER_USER="${replication_user}",
 MASTER_PASSWORD="${replication_passwd}",
-MASTER_PORT=3306,
 MASTER_LOG_FILE="${binlogname}",
 MASTER_LOG_POS=${position},
 MASTER_CONNECT_RETRY=10;
+
 START SLAVE;
-SELECT SLEEP(3);
-SHOW SLAVE STATUS\G'"
 EOF
 
