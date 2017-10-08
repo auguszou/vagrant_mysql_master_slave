@@ -6,7 +6,8 @@
 # sed -i 's/^binlog-ingore-db.*$/binlog-ignore-db = mysql/g' /etc/my.cnf
 # sed -i 's/^binlog-ingore-db.*$/binlog-ignore-db = information_schema/g' /etc/my.cnf
 cat >> /etc/mysql/conf.d/mysql.cnf <<EOF
-log-bin=mysql-bin
+log_bin=mysql-bin
+sync_binlog=1
 server-id=1
 binlog-do-db=test
 binlog-ignore-db=information_schema

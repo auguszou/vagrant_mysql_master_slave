@@ -9,15 +9,15 @@ export replication_passwd="123"
 export replication_db="test"
 
 #variables for slave
-export slave_ip=`ifconfig eth0 | grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}'`
-export slave_server_id=${ipAddr##*.}
+export slave_ip=`ifconfig enp0s8| grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}'`
+export slave_server_id=${slave_ip##*.}
 export slave_mysql_root_passwd="123"
 export slave_ssh_login_user="vagrant"
 export slave_ssh_login_passwd="vagrant"
 
 cmd_ssh="sshpass -p ${master_ssh_login_passwd} ssh ${master_ssh_login_user}@${master_ip}"
 cmd_status="${master_}${mysqlbinpath}/mysql -uroot -p${master_mysql_root_passwd} -e \"show master status\G\""
-export status=`${cmd_ssh}-e '${cmd_status}'`
+export status=`${cmd_ssh} -e '${cmd_status}'`
 
 cmd_binlogname="echo \"$status\" | grep \"File\" | awk '{print $2}'"
 export binlogname=`${cmd_ssh} -e '${cmd_binlogname}'`
@@ -36,7 +36,7 @@ EOF
 /etc/init.d/mysql restart
 
 mysql -uroot -p${slave_mysql_root_passwd} <<EOF
-stop slave;
+STOP SLAVE;
 CHANGE MASTER TO MASTER_HOST=\"${master_ip}\",
 MASTER_USER=\"${replication_user}\",
 MASTER_PASSWORD=\"${replication_passwd}\",
@@ -44,8 +44,8 @@ MASTER_PORT=3306,
 MASTER_LOG_FILE=\"${binlogname}\",
 MASTER_LOG_POS=${position},
 MASTER_CONNECT_RETRY=10;
-start slave;
-select sleep(3);
-show slave status\G'"
+START SLAVE;
+SELECT SLEEP(3);
+SHOW SLAVE STATUS\G'"
 EOF
 
