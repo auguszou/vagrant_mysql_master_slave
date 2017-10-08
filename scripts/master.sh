@@ -5,13 +5,17 @@
 # sed -i 's/^binlog-do-db.*$/binlog-do-db = test/g' /etc/my.cnf
 # sed -i 's/^binlog-ingore-db.*$/binlog-ignore-db = mysql/g' /etc/my.cnf
 # sed -i 's/^binlog-ingore-db.*$/binlog-ignore-db = information_schema/g' /etc/my.cnf
-cat >> /etc/mysql/conf.d/mysql.cnf <<EOF
-log_bin=mysql-bin
-sync_binlog=1
+cat >> /etc/mysql/mysql.conf.d/mysqld.cnf <<EOF
 server-id=1
 binlog-do-db=test
 binlog-ignore-db=information_schema
 binlog-ignore-db=mysql
+
+slow_query_log=1
+slow_query_log_file=/var/lib/mysql/mysql-slow.log
+
+sync_binlog=1
+log-bin=/var/lib/mysql/mysql-bin
 EOF
 
 #variables for master

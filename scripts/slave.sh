@@ -29,7 +29,7 @@ mysql -uroot -p${slave_mysql_root_passwd} -e 'drop database if exists ${replicat
 mysql -uroot -p${slave_mysql_root_passwd} ${replication_db} < /vagrant/${replication_db}.sql
 
 # sed -i 's/^server-id.*$/server-id = ${slave_server_id}/g' /etc/my.cnf
-cat >> /etc/mysql/conf.d/mysql.cnf <<EOF
+cat >> /etc/mysql/mysql.conf.d/mysqld.cnf <<EOF
 server-id=${slave_server_id}
 EOF
 
