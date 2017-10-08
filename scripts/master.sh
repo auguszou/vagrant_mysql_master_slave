@@ -17,14 +17,14 @@ log-bin=mysql-bin
 EOF
 
 #variables for master
-export master_ip="192.168.1.10"
+export master_ip=`ifconfig enp0s8| grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}'`
 export master_mysql_root_passwd="123"
 export replication_user="copydb"
 export replication_passwd="123"
 export replication_db="test"
 
 #variables for slave
-export slave_ssh_login_user="vagrant"
+export slave_ssh_login_user="ubuntu"
 export slave_ssh_login_passwd="vagrant"
 export slave_mysql_root_passwd="123"
 

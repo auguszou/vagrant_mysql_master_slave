@@ -1,7 +1,7 @@
 #variables for master
-export master_ip="192.168.1.10"
-export master_ssh_login_user="vagrant"
-export master_ssh_login_user="vagrant"
+export master_ip="192.168.2.10"
+export master_ssh_login_user="ubuntu"
+export master_ssh_login_passwd="vagrant"
 
 export master_mysql_root_passwd="123"
 export replication_user="copydb"
@@ -12,12 +12,12 @@ export replication_db="test"
 export slave_ip=`ifconfig enp0s8| grep "inet addr" | awk '{ print $2}' | awk -F: '{print $2}'`
 export slave_server_id=${slave_ip##*.}
 export slave_mysql_root_passwd="123"
-export slave_ssh_login_user="vagrant"
+export slave_ssh_login_user="ubuntu"
 export slave_ssh_login_passwd="vagrant"
 
 cmd_ssh="sshpass -p ${master_ssh_login_passwd} ssh ${master_ssh_login_user}@${master_ip}"
-cmd_status="mysql -uroot -p${master_mysql_root_passwd} -e \"show master status\G\""
-export status=`${cmd_ssh} -e '${cmd_status}'`
+cmd_status="mysql -uroot -p${master_mysql_root_passwd} -e 'show master status\G'"
+export status=`${cmd_ssh} '${cmd_status}'`
 export binlogname=`echo \"$status\" | grep \"File\" | awk '{print $2}'`
 export postion=`echo "$status" | grep "Position" | awk '{print $2}'`
 
